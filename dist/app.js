@@ -1,33 +1,32 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
+const db = require('./services/db');
 const app = express();
 const port = process.env.PORT || 3000;
-var mysql = require('mysql');
-var pool = mysql.createPool({
-    connectionLimit: 10,
-    host: 'db-blocked-ips.cnws0qrfgqmq.us-east-2.rds.amazonaws.com',
-    user: 'admin',
-    password: 'password123',
-    database: 'sys'
-});
-app.get("/", (req, res) => {
+app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let ip = req.query.ip;
-    pool.query('SELECT id FROM sys.blocked_ips WHERE `ip` = ?', ip, function (error, results, fields) {
-        if (error)
-            throw error;
-        if (results.length > 0) {
-            res.send(1);
+    try {
+        var result = yield db.query('SELECT id FROM blocked_ips WHERE ip = ?', [ip]);
+        if (result.length > 0) {
+            res.json({ success: true, found: true });
         }
-        else {
-            res.send(0);
-        }
-    });
-});
+        res.json({ success: true, found: false });
+    }
+    catch (err) {
+        console.error(`Error while getting quotes `, err.message);
+    }
+}));
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
-function checkIPAddress(ip) {
-    return false;
-}
 //# sourceMappingURL=app.js.map
