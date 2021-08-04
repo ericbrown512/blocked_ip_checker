@@ -1,17 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const NodeGit = require("nodegit");
-const pathToRepo = require("path").resolve("../nodegit");
-NodeGit.Clone("https://github.com/firehol/blocklist-ipsets.git", "firehol").then((repository) => {
-    console.log(JSON.stringify(repository));
+const express = require("express");
+const app = express();
+const port = 3000;
+app.get("/", (req, res) => {
+    let ip = req.query.ip;
+    res.send(ip);
 });
-// NodeGit.Repository.open(pathToRepo).then((successfulResult) => {
-//
-//     console.log("Success: " + JSON.stringify(successfulResult));
-//
-// }, (reasonForFailure) => {
-//
-//     console.log("Failed: " + JSON.stringify(reasonForFailure));
-//
-// });
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+});
+function checkIPAddress(ip) {
+    return false;
+}
 //# sourceMappingURL=app.js.map
