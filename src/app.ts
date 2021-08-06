@@ -14,13 +14,13 @@ app.get("/", async (req, res) => {
         }
         res.json({success: true, found: false});
     } catch (err) {
-        console.error(`Error while getting quotes `, err.message);
-
+        res.json({success: false, found: false, error: err.message});
+        console.error(`Error while checking ip `, err.message);
     }
 
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`IP checker is now listening`);
 });
 

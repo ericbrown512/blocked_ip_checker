@@ -1,6 +1,7 @@
 const env = process.env;
+
 const configuration = {
-    db: {
+    db: { /* do not put password or any sensitive info here, done only for demo */
         host: env.DB_HOST || 'db-blocked-ips.cnws0qrfgqmq.us-east-2.rds.amazonaws.com',
         user: env.DB_USER || 'admin',
         password: env.DB_PASSWORD || 'password123',
@@ -12,5 +13,5 @@ const configuration = {
     },
     listPerPage: env.LIST_PER_PAGE || 10,
 };
+
 module.exports = configuration;
-//# sourceMappingURL=config.js.map
