@@ -17,8 +17,10 @@ const port = process.env.PORT || 3000;
 app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let ip = req.query.ip;
     try {
+        console.log(ip);
         //Convert ip address to an integer
         var ipNum = ipInt(ip).toInt();
+        console.log(ipNum);
         //Check if the integer is in any ip ranges we have listed
         var result = yield db.query('SELECT id FROM blocked_ips WHERE ? >= ip_range_start AND ? <= ip_range_end', [ipNum, ipNum]);
         if (result.length > 0) {

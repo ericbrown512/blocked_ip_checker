@@ -12,6 +12,8 @@ app.get("/", async (req, res) => {
         //Convert ip address to an integer
         var ipNum = ipInt(ip).toInt();
 
+        console.log("Got Request for IP: "+ip+" IntVal: "+ipNum);
+
         //Check if the integer is in any ip ranges we have listed
         var result = await db.query('SELECT id FROM blocked_ips WHERE ? >= ip_range_start AND ? <= ip_range_end', [ipNum, ipNum]);
         if(result.length > 0) {
